@@ -5,6 +5,7 @@ public class NetworkManager : MonoBehaviour
 {
     public bool isAtStartup = true;
     NetworkClient myClient;
+    int connexions = 0;
     void Update()
     {
         if (isAtStartup)
@@ -16,6 +17,7 @@ public class NetworkManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.C))
             {
                 SetupClient();
+
             }
             if (Input.GetKeyDown(KeyCode.B))
             {
@@ -26,11 +28,16 @@ public class NetworkManager : MonoBehaviour
     }
     void OnGUI()
     {
-        if (isAtStartup)
-        {
+        connexions = NetworkClient.GetTotalConnectionStats().Count;
+
             GUI.Label(new Rect(2, 10, 150, 100), "Press W for server");
             GUI.Label(new Rect(2, 30, 150, 100), "Press B for both");
             GUI.Label(new Rect(2, 50, 150, 100), "Press C for client");
+            GUI.Label(new Rect(2, 70, 150, 100), $"Nb connections : {connexions}");
+
+        if (isAtStartup)
+        {
+            
         }
     }
 
@@ -39,6 +46,8 @@ public class NetworkManager : MonoBehaviour
     {
         NetworkServer.Listen(4444);
         isAtStartup = false;
+        connexions++;
+
     }
 
     // Create a client and connect to the server port
@@ -48,6 +57,7 @@ public class NetworkManager : MonoBehaviour
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
         myClient.Connect("127.0.0.1", 4444);
         isAtStartup = false;
+        connexions++;
     }
 
     // Create a local client and connect to the local server
@@ -61,6 +71,7 @@ public class NetworkManager : MonoBehaviour
     // client function
     public void OnConnected(NetworkMessage netMsg)
     {
+     
         Debug.Log("Connected to server");
     }
 }
