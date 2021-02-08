@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-// Include the namespace required to use Unity UI
 using UnityEngine.UI;
-
-using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	
@@ -14,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 	// Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
 	private Rigidbody rb;
 	private int count;
+
+	public int Count => count;
 
 	// At the start of the game..
 	void Start ()
@@ -31,8 +30,9 @@ public class PlayerController : MonoBehaviour {
 		winText.text = "";
 	}
 
-	// Each physics step..
-	void FixedUpdate ()
+   
+    // Each physics step..
+    void FixedUpdate ()
 	{
 		// Set some local float variables equal to the value of our Horizontal and Vertical Inputs
 		float moveHorizontal = Input.GetAxis ("Horizontal");
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 			other.gameObject.SetActive (false);
 
 			// Add one to the score variable 'count'
-			count = count + 1;
+			count ++;
 
 			// Run the 'SetCountText()' function (see below)
 			SetCountText ();
@@ -68,13 +68,12 @@ public class PlayerController : MonoBehaviour {
 	void SetCountText()
 	{
 		// Update the text field of our 'countText' variable
-		countText.text = "Count: " + count.ToString ();
-
+		countText.text = "Count : " + count.ToString ();
 		// Check if our 'count' is equal to or exceeded 12
 		if (count >= 12) 
 		{
 			// Set the text value of our 'winText'
-			winText.text = "You Win!";
+			winText.text = "You Win !";
 		}
 	}
 }

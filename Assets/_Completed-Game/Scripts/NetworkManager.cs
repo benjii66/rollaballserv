@@ -71,7 +71,6 @@ public class NetworkManager : MonoBehaviour
     // client function
     public void OnConnected(NetworkMessage netMsg)
     {
-     
         Debug.Log("Connected to server");
     }
 }
